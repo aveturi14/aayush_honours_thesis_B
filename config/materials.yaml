@@ -1,0 +1,55 @@
+# Table 1: face sheet material properties
+# Table 2: core properties
+# All values transcribed verbatim from Sahib & Kovacs (2024).
+
+face_sheets:
+  CFRP:
+    E1:    {value: , unit: GPa,    source: "Table 1"}
+    E2:    {value: , unit: GPa,    source: "Table 1"}
+    G12:   {value: , unit: GPa,    source: "Table 1"}
+    nu12:  {value: , unit: "",     source: "Table 1"}
+    rho:   {value: , unit: kg/m**3, source: "Table 1"}
+    t_ply: {value: , unit: mm,     source: "Table 1"}
+    strength:
+      Xt: {value: , unit: MPa, source: "Table 1"}
+      Xc: {value: , unit: MPa, source: "Table 1"}
+      Yt: {value: , unit: MPa, source: "Table 1"}
+      Yc: {value: , unit: MPa, source: "Table 1"}
+      S:  {value: , unit: MPa, source: "Table 1"}
+    cost_ratio: {value: 1.5, unit: "", source: "Sec 2.3, relative to GFRP"}
+
+  GFRP:
+    # same keys
+    cost_ratio: {value: 1.0, unit: "", source: "Sec 2.3, reference material"}
+
+  Al:
+    # aluminium is isotropic; decide whether to store E/nu only
+    # or store E1 = E2 = E and G12 = E/(2(1+nu)) for a uniform interface
+    cost_ratio: {value: 0.31, unit: "", source: "Sec 2.3, relative to GFRP"}
+
+cores:
+  # Table 2 gives six discrete densities. Key them by density so
+  # sampling.py can select one directly.
+  rho_32:
+    density:     {value: 32, unit: kg/m**3, source: "Table 2"}
+    G_L:         {value: , unit: MPa, source: "Table 2"}
+    G_W:         {value: , unit: MPa, source: "Table 2"}
+    tau_L:       {value: , unit: MPa, source: "Table 2"}
+    tau_W:       {value: , unit: MPa, source: "Table 2"}
+    E_c:         {value: , unit: MPa, source: "Table 2"}
+    cost_ratio:  {value: 0.5, unit: "", source: "Sec 2.3"}
+  # ...five more
+
+unreported:
+  cell_size_c:
+    value: null
+    unit: mm
+    source: "NOT IN PAPER"
+    gap_id: GR-001
+    note: "Appears in Eq. 7 (intra-cell buckling). Candidate values from HexWeb standard product line."
+  tsai_wu_F12:
+    value: null
+    unit: "1/MPa**2"
+    source: "NOT IN PAPER"
+    gap_id: GR-002
+    note: "Interaction coefficient, not determinable from uniaxial tests. Convention to be selected Week 2."
