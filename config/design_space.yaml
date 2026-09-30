@@ -1,26 +1,31 @@
-geometry:
-  a: {value: , unit: mm, source: "Table 3"}   # panel length
-  b: {value: , unit: mm, source: "Table 3"}   # panel width
+# Design variables and constraint thresholds.
+# Everything the Monte Carlo varies, plus what samples are checked against.
 
-loading:
-  pressure: {value: , unit: MPa, source: "Table 3"}
-  boundary_conditions: "simply supported on lower edges (Sec 5)"
+continuous:
+  core_thickness:
+    min: {value: 5, unit: mm, source: "Table 4"}
+    max: {value: 20, unit: mm, source: "Table 4"}
+  applied_load:
+    min: {value: 0.0024, unit: MPa, source: "Sec 3.1"}
+    max: {value: 0.0048, unit: MPa, source: "Sec 3.1"}
 
-reference_designs:
-  # Table 6: the three layups for FEM comparison
-  min_weight:  {layup: [1,1,1,1,1,1], tc: , rho_c: , source: "Table 6"}
-  min_cost:    {layup: [3,3,3,3,3,3], tc: , rho_c: , source: "Table 6"}
-  knee_point:  {layup: [3,1,1,2,1,2], tc: , rho_c: , source: "Table 6"}
+discrete:
+  core_density:
+    values: [29, 37, 42, 54, 59, 83]   # six values; must match keys in materials.yaml
+    unit: kg/m**3
+    source: "Table 2"
+  layer_material:
+    values: [1, 2, 3]  # codes defined in problem.yaml
+    n_layers: 6
+    source: "Table 4"
 
-published_results:
-  # Week 8 and 9 targets. Not inputs; verification anchors.
-  knee_weight:     {value: 2.39, unit: kg, source: "Sec 5"}
-  knee_cost:       {value: 2.1,  unit: "", source: "Sec 5"}
-  pareto_points:   {value: 18,   unit: "", source: "Table 5"}
-  ann_mse:         {value: 1.3e-5, unit: "", source: "Fig 8"}
-  ann_epochs:      {value: 639,  unit: "", source: "Fig 8"}
-  max_fem_deviation: {value: 8.9, unit: "%", source: "Table 7"}
+constraints:
+  max_total_thickness:  {value: , unit: mm, source: "Eq 25"}
+  max_deflection_ratio: {value: , unit: "", source: "Eq 24"}
+  min_safety_factor:    {value: , unit: "", source: "Eqs 22-25"}
 
-run:
-  seed: 42
-  n_samples: 9000
+layer_material:
+  values: [1, 2, 3]
+  n_layers: 6
+  source: "Table 4"
+  note: "Codes defined in problem.yaml material_codes"

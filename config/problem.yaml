@@ -1,26 +1,57 @@
 geometry:
-  a: {value: , unit: mm, source: "Table 3"}   # panel length
-  b: {value: , unit: mm, source: "Table 3"}   # panel width
+  l: {value: 800, unit: mm, source: "Table 3"}
+  b: {value: 390, unit: mm, source: "Table 3"}
 
-loading:
-  pressure: {value: , unit: MPa, source: "Table 3"}
-  boundary_conditions: "simply supported on lower edges (Sec 5)"
+boundary_conditions: "simply supported on lower edges (Sec 5)"
+
+beam_coefficients:
+  k_b: {value: 0.0130208333, unit: "", source: "Table 3, = 5/384"}
+  k_s: {value: 0.125,        unit: "", source: "Table 3, = 1/8"}
+
+nominal_case:
+  p: {value: 0.004142, unit: MPa, source: "Table 3"}
+  note: "Nominal design load. P, M_max and F derived in solver.py. MCS range in design_space.yaml"
+
+material_codes:
+  1: CFRP
+  2: GFRP
+  3: Al
 
 reference_designs:
-  # Table 6: the three layups for FEM comparison
-  min_weight:  {layup: [1,1,1,1,1,1], tc: , rho_c: , source: "Table 6"}
-  min_cost:    {layup: [3,3,3,3,3,3], tc: , rho_c: , source: "Table 6"}
-  knee_point:  {layup: [3,1,1,2,1,2], tc: , rho_c: , source: "Table 6"}
+  min_weight:
+    layup: [1, 1, 1, 1, 1, 1]
+    tc:    {value: 15.21, unit: mm,      source: "Table 6"}
+    tf:    {value: 0.75,  unit: mm,      source: "Table 6"}
+    rho_c: {value: 37,    unit: kg/m**3, source: "Table 6"}
+    objectives:
+      Wt: {value: 1.88, unit: kg, source: "Table 6"}
+      Ct: {value: 2.41, unit: "", source: "Table 6"}
+    note: "Totally CFRP"
+
+  min_cost:
+    layup: [3, 3, 3, 3, 3, 3]
+    tc:    {value: 17.46, unit: mm,      source: "Table 6"}
+    tf:    {value: 1.2,   unit: mm,      source: "Table 6"}
+    rho_c: {value: 29,    unit: kg/m**3, source: "Table 6"}
+    objectives:
+      Wt: {value: 4.65, unit: kg, source: "Table 6"}
+      Ct: {value: 1.53, unit: "", source: "Table 6"}
+    note: "Totally Al"
+
+  knee_point:
+    layup: [3, 1, 1, 2, 1, 2]
+    tc:    {value: 17.93, unit: mm,      source: "Table 6"}
+    tf:    {value: 0.825, unit: mm,      source: "Table 6"}
+    rho_c: {value: 29,    unit: kg/m**3, source: "Table 6"}
+    objectives:
+      Wt: {value: 2.1,  unit: kg, source: "Table 6"}
+      Ct: {value: 2.39, unit: "", source: "Table 6"}
+    note: "FML"
 
 published_results:
-  # Week 8 and 9 targets. Not inputs; verification anchors.
-  knee_weight:     {value: 2.39, unit: kg, source: "Sec 5"}
-  knee_cost:       {value: 2.1,  unit: "", source: "Sec 5"}
-  pareto_points:   {value: 18,   unit: "", source: "Table 5"}
-  ann_mse:         {value: 1.3e-5, unit: "", source: "Fig 8"}
-  ann_epochs:      {value: 639,  unit: "", source: "Fig 8"}
-  max_fem_deviation: {value: 8.9, unit: "%", source: "Table 7"}
+  knee_weight: {value: 2.1,  unit: kg, source: "Table 6"}
+  knee_cost:   {value: 2.39, unit: "", source: "Table 6"}
 
 run:
   seed: 42
-  n_samples: 9000
+  n_samples: 9000 

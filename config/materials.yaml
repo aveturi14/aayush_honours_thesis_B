@@ -4,42 +4,137 @@
 
 face_sheets:
   CFRP:
-    E1:    {value: , unit: GPa,    source: "Table 1"}
-    E2:    {value: , unit: GPa,    source: "Table 1"}
-    G12:   {value: , unit: GPa,    source: "Table 1"}
-    nu12:  {value: , unit: "",     source: "Table 1"}
-    rho:   {value: , unit: kg/m**3, source: "Table 1"}
-    t_ply: {value: , unit: mm,     source: "Table 1"}
+    E1:    {value: 130, unit: GPa,    source: "Table 1"}
+    E2:    {value: 10, unit: GPa,    source: "Table 1"}
+    G12:   {value: 5, unit: GPa,    source: "Table 1"}
+    nu12:  {value: 0.28, unit: "",     source: "Table 1"}
+    rho:   {value: 1600, unit: kg/m**3, source: "Table 1"}
+    t_ply: {value: 0.125, unit: mm,     source: "Table 1"}
     strength:
-      Xt: {value: , unit: MPa, source: "Table 1"}
-      Xc: {value: , unit: MPa, source: "Table 1"}
-      Yt: {value: , unit: MPa, source: "Table 1"}
-      Yc: {value: , unit: MPa, source: "Table 1"}
-      S:  {value: , unit: MPa, source: "Table 1"}
+      Xt: {value: 2000, unit: MPa, source: "Table 1"}
+      Xc: {value: 1300, unit: MPa, source: "Table 1"}
+      Yt: {value: 78, unit: MPa, source: "Table 1"}
+      Yc: {value: 246, unit: MPa, source: "Table 1"}
+      S:  {value: 68, unit: MPa, source: "Table 1"}
     cost_ratio: {value: 1.5, unit: "", source: "Sec 2.3, relative to GFRP"}
 
   GFRP:
     # same keys
+    E1:    {value: 430, unit: GPa,    source: "Table 1"}
+    E2:    {value: 8, unit: GPa,    source: "Table 1"}
+    G12:   {value: 4.3, unit: GPa,    source: "Table 1"}
+    nu12:  {value: 0.25, unit: "",     source: "Table 1"}
+    rho:   {value: 1800, unit: kg/m**3, source: "Table 1"}
+    t_ply: {value: 0.125, unit: mm,     source: "Table 1"}
+    strength:
+      Xt: {value: 1140, unit: MPa, source: "Table 1"}
+      Xc: {value: 620, unit: MPa, source: "Table 1"}
+      Yt: {value: 39, unit: MPa, source: "Table 1"}
+      Yc: {value: 128, unit: MPa, source: "Table 1"}
+      S:  {value: 60, unit: MPa, source: "Table 1"}
     cost_ratio: {value: 1.0, unit: "", source: "Sec 2.3, reference material"}
 
   Al:
     # aluminium is isotropic; decide whether to store E/nu only
     # or store E1 = E2 = E and G12 = E/(2(1+nu)) for a uniform interface
+     # same keys
+    E1:    {value: 70, unit: GPa,    source: "Table 1"}
+    E2:    {value: 70, unit: GPa,    source: "Table 1"}
+    G12:   {value: 260, unit: GPa,    source: "Table 1"}
+    nu12:  {value: 0.33, unit: "",     source: "Table 1"}
+    rho:   {value: 2780, unit: kg/m**3, source: "Table 1"}
+    t_ply: {value: 0.2, unit: mm,     source: "Table 1"}
+    strength:
+      Xt: {value: 186, unit: MPa, source: "Table 1"}
+      Xc: {value: 186, unit: MPa, source: "Table 1"}
+      Yt: {value: 186, unit: MPa, source: "Table 1"}
+      Yc: {value: 186, unit: MPa, source: "Table 1"}
+      S:  {value: 110, unit: MPa, source: "Table 1"}
     cost_ratio: {value: 0.31, unit: "", source: "Sec 2.3, relative to GFRP"}
 
 cores:
   # Table 2 gives six discrete densities. Key them by density so
   # sampling.py can select one directly.
-  rho_32:
-    density:     {value: 32, unit: kg/m**3, source: "Table 2"}
-    G_L:         {value: , unit: MPa, source: "Table 2"}
-    G_W:         {value: , unit: MPa, source: "Table 2"}
-    tau_L:       {value: , unit: MPa, source: "Table 2"}
-    tau_W:       {value: , unit: MPa, source: "Table 2"}
-    E_c:         {value: , unit: MPa, source: "Table 2"}
-    cost_ratio:  {value: 0.5, unit: "", source: "Sec 2.3"}
+  rho_29:
+    density:     {value: 29, unit: kg/m**3, source: "Table 2"}
+  x:
+    strength: {value: 0.4, unit: MPa, source: "Table 2"}
+    modulus:  {value: 55,  unit: MPa, source: "Table 2"}
+  y:
+    strength: {value: 0.65, unit: MPa, source: "Table 2"}
+    modulus:  {value: 110,  unit: MPa, source: "Table 2"}
+  z:
+    strength: {value: 0.9, unit: MPa, source: "Table 2"}
+    modulus:  {value: 165, unit: MPa, source: "Table 2"}
+  # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
   # ...five more
 
+  rho_37:
+    density:     {value: 37, unit: kg/m**3, source: "Table 2"}
+    x:
+      strength: {value: 0.45, unit: MPa, source: "Table 2"}
+      modulus:  {value: 90,  unit: MPa, source: "Table 2"}
+    y:
+      strength: {value: 0.8, unit: MPa, source: "Table 2"}
+      modulus:  {value: 190,  unit: MPa, source: "Table 2"}
+    z:
+      strength: {value: 1.4, unit: MPa, source: "Table 2"}
+      modulus:  {value: 240, unit: MPa, source: "Table 2"}
+    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+
+  rho_42:
+    density:     {value: 42, unit: kg/m**3, source: "Table 2"}
+    x:
+      strength: {value: 0.5, unit: MPa, source: "Table 2"}
+      modulus:  {value: 100,  unit: MPa, source: "Table 2"}
+    y:
+      strength: {value: 0.9, unit: MPa, source: "Table 2"}
+      modulus:  {value: 220,  unit: MPa, source: "Table 2"}
+    z:
+      strength: {value: 1.5, unit: MPa, source: "Table 2"}
+      modulus:  {value: 275, unit: MPa, source: "Table 2"}
+    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+  # ...five more
+
+  rho_54:
+    density:     {value: 54, unit: kg/m**3, source: "Table 2"}
+    x:
+      strength: {value: 0.85, unit: MPa, source: "Table 2"}
+      modulus:  {value: 130,  unit: MPa, source: "Table 2"}
+    y:
+      strength: {value: 1.4, unit: MPa, source: "Table 2"}
+      modulus:  {value: 260,  unit: MPa, source: "Table 2"}
+    z:
+      strength: {value: 2.5, unit: MPa, source: "Table 2"}
+      modulus:  {value: 540, unit: MPa, source: "Table 2"}
+    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+
+  rho_59:
+    density:     {value: 59, unit: kg/m**3, source: "Table 2"}
+    x:
+      strength: {value: 0.9, unit: MPa, source: "Table 2"}
+      modulus:  {value: 140,  unit: MPa, source: "Table 2"}
+    y:
+      strength: {value: 1.45, unit: MPa, source: "Table 2"}
+      modulus:  {value: 280,  unit: MPa, source: "Table 2"}
+    z:
+      strength: {value: 2.6, unit: MPa, source: "Table 2"}
+      modulus:  {value: 630, unit: MPa, source: "Table 2"}
+    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+
+  rho_83:
+    density:     {value: 83, unit: kg/m**3, source: "Table 2"}
+    x:
+      strength: {value: 1.5, unit: MPa, source: "Table 2"}
+      modulus:  {value: 220,  unit: MPa, source: "Table 2"}
+    y:
+      strength: {value: 2.4, unit: MPa, source: "Table 2"}
+      modulus:  {value: 440,  unit: MPa, source: "Table 2"}
+    z:
+      strength: {value: 4.6, unit: MPa, source: "Table 2"}
+      modulus:  {value: 1000, unit: MPa, source: "Table 2"}
+    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+  
 unreported:
   cell_size_c:
     value: null
