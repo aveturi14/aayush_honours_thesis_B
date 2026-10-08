@@ -19,6 +19,18 @@ continuous:
     max: {value: 0.0048, unit: MPa, source: "Sec 3.2"}
     optimisation_value: {value: 0.004142, unit: MPa, source: "Table 3"}
 
+discrete:
+  core_density:
+    values: [29, 37, 42, 54, 59, 83]   # must match the keys in materials.yaml
+    unit: kg/m**3
+    source: "Table 2"
+  layer_material:
+    values: [1, 2, 3]
+    n_layers: 6
+    source: "Table 4"
+    note: "Codes defined in problem.yaml material_codes. Each of the six
+           layers is selected independently."
+           
 constraints:
   max_total_thickness:  {value: 20.0, unit: mm, source: "Eq 27"}
   deflection_divisor:   {value: 400,  unit: "", source: "Eq 26, delta <= l/400"}

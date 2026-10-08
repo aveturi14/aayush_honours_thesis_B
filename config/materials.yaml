@@ -57,17 +57,17 @@ cores:
   # sampling.py can select one directly.
   rho_29:
     density:     {value: 29, unit: kg/m**3, source: "Table 2"}
-  x:
-    strength: {value: 0.4, unit: MPa, source: "Table 2"}
-    modulus:  {value: 55,  unit: MPa, source: "Table 2"}
-  y:
-    strength: {value: 0.65, unit: MPa, source: "Table 2"}
-    modulus:  {value: 110,  unit: MPa, source: "Table 2"}
-  z:
-    strength: {value: 0.9, unit: MPa, source: "Table 2"}
-    modulus:  {value: 165, unit: MPa, source: "Table 2"}
-  # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
-  # ...five more
+    x:
+      strength: {value: 0.4, unit: MPa, source: "Table 2"}
+      modulus:  {value: 55,  unit: MPa, source: "Table 2"}
+    y:
+      strength: {value: 0.65, unit: MPa, source: "Table 2"}
+      modulus:  {value: 110,  unit: MPa, source: "Table 2"}
+    z:
+      strength: {value: 0.9, unit: MPa, source: "Table 2"}
+      modulus:  {value: 165, unit: MPa, source: "Table 2"}
+    cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+    # ...five more
 
   rho_37:
     density:     {value: 37, unit: kg/m**3, source: "Table 2"}
@@ -80,7 +80,7 @@ cores:
     z:
       strength: {value: 1.4, unit: MPa, source: "Table 2"}
       modulus:  {value: 240, unit: MPa, source: "Table 2"}
-    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+    cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
 
   rho_42:
     density:     {value: 42, unit: kg/m**3, source: "Table 2"}
@@ -93,7 +93,7 @@ cores:
     z:
       strength: {value: 1.5, unit: MPa, source: "Table 2"}
       modulus:  {value: 275, unit: MPa, source: "Table 2"}
-    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+    cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
   # ...five more
 
   rho_54:
@@ -107,7 +107,7 @@ cores:
     z:
       strength: {value: 2.5, unit: MPa, source: "Table 2"}
       modulus:  {value: 540, unit: MPa, source: "Table 2"}
-    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+    cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
 
   rho_59:
     density:     {value: 59, unit: kg/m**3, source: "Table 2"}
@@ -120,7 +120,7 @@ cores:
     z:
       strength: {value: 2.6, unit: MPa, source: "Table 2"}
       modulus:  {value: 630, unit: MPa, source: "Table 2"}
-    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+    cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
 
   rho_83:
     density:     {value: 83, unit: kg/m**3, source: "Table 2"}
@@ -133,7 +133,7 @@ cores:
     z:
       strength: {value: 4.6, unit: MPa, source: "Table 2"}
       modulus:  {value: 1000, unit: MPa, source: "Table 2"}
-    # cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
+    cost_ratio: {value: 0.5, unit: "", source: "Sec 2.3"}
   
 unreported:
   cell_size_c:
