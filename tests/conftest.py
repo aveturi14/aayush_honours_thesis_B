@@ -41,9 +41,14 @@ def GFRP() -> Material:
 
 @pytest.fixture
 def AL() -> Material:
+    """Al G12 = 26,000 MPa as transcribed from Table 1.
+
+    The isotropic relation E/(2(1+nu)) gives 26,316 MPa, so the published
+    figure is ~1.2% low.  Transcribed value retained; see gap register.
+    """
     return Material(
         name="Al",
-        E1=70_000.0, E2=70_000.0, nu12=0.33, G12=26_315.8,
+        E1=70_000.0, E2=70_000.0, nu12=0.33, G12=26_000.0,
         t_ply=0.2, rho=2780.0,
         Xt=186.0, Xc=186.0, Yt=186.0, Yc=186.0, S=110.0,
         cost_ratio=0.31,

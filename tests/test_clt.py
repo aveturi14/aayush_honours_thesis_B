@@ -32,11 +32,17 @@ def test_face_sheet_thicknesses(MATERIALS):
 # --- ply level -------------------------------------------------------------
 
 def test_isotropic_Q(AL):
-    """Aluminium must give Q11 = Q22 = E/(1-nu^2) and Q66 = E/(2(1+nu))."""
+    """Aluminium must give Q11 = Q22 = E/(1-nu^2).
+
+    Q66 = G12 is checked against the isotropic relation only loosely:
+    Table 1 prints 26,000 MPa where E/(2(1+nu)) gives 26,316, a 1.2%
+    discrepancy.  The published value is used; the tolerance records that
+    it is close to but not exactly the isotropic value.
+    """
     Q = reduced_stiffness(AL)
     assert Q[0, 0] == pytest.approx(AL.E1 / (1 - AL.nu12 ** 2))
     assert Q[1, 1] == pytest.approx(AL.E1 / (1 - AL.nu12 ** 2))
-    assert Q[2, 2] == pytest.approx(AL.E1 / (2 * (1 + AL.nu12)), rel=1e-5)
+    assert Q[2, 2] == pytest.approx(AL.E1 / (2 * (1 + AL.nu12)), rel=0.02)
 
 
 def test_Q_exceeds_E1(CFRP):
