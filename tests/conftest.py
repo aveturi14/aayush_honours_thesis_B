@@ -1,21 +1,6 @@
-"""Shared fixtures.
-
-Material values from Table 1 of Sahib & Kovacs (2024), with two
-corrections (see docs/gap_register.md):
-  - GFRP E1 printed as 430,000 MPa; implausible for glass fibre and
-    stiffer than the CFRP alongside it.  Corrected to 43,000 MPa.
-  - Al G12 printed as 260,000 MPa; the isotropic relation E/(2(1+nu))
-    gives 26,316 MPa.  Corrected.
-
-Hardcoded here rather than read from config/materials.yaml so the tests
-do not depend on a YAML loader that does not exist yet.  Move to the
-loader in Week 3.
-"""
 
 import pytest
-
 from sandwich.clt import Material
-
 
 @pytest.fixture
 def CFRP() -> Material:
@@ -41,11 +26,6 @@ def GFRP() -> Material:
 
 @pytest.fixture
 def AL() -> Material:
-    """Al G12 = 26,000 MPa as transcribed from Table 1.
-
-    The isotropic relation E/(2(1+nu)) gives 26,316 MPa, so the published
-    figure is ~1.2% low.  Transcribed value retained; see gap register.
-    """
     return Material(
         name="Al",
         E1=70_000.0, E2=70_000.0, nu12=0.33, G12=26_000.0,
@@ -57,11 +37,9 @@ def AL() -> Material:
 
 @pytest.fixture
 def MATERIALS(CFRP, GFRP, AL) -> dict[int, Material]:
-    """Layup codes per config/problem.yaml: 1 = CFRP, 2 = GFRP, 3 = Al."""
     return {1: CFRP, 2: GFRP, 3: AL}
 
 
 @pytest.fixture
 def FML_LAYUP(MATERIALS) -> list[Material]:
-    """Table 6 knee point: [3,1,1,2,1,2], t_f = 0.825 mm."""
     return [MATERIALS[c] for c in (3, 1, 1, 2, 1, 2)]
