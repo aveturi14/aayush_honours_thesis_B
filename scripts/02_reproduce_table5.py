@@ -1,22 +1,27 @@
-"""Reproduce the W_t and C_t columns of Table 5.
 
-Week 3 deliverable.  Table 5 publishes only layup, t_c, rho_c, C_t and
-W_t, so this verifies Eqs. 13-15 and nothing else.  See GR-018.
-"""
-
+# imports functions from clt.py, config.py and failure.py  
 from sandwich.config import load_materials, load_problem
 from sandwich.objectives import total_cost, total_weight
 
 
 def main():
+    # take material properties from materials.yaml
     MATERIALS, CORES = load_materials()
+    
+    # take problem configuration from problem.yaml (table 5 and 6)
     prob = load_problem()
 
+    # Compute weight and cost for each Pareto design and compare to published values
+    # Reproduce Table 5 from the thesis, with weight error and cost ratio columns.
+    print("\nTABLE 5 PARETO DESIGNS")
     print(f"{'#':>3} {'Wt pub':>7} {'Wt calc':>8} {'err %':>7}   "
           f"{'Ct pub':>7} {'Ct calc':>9} {'ratio':>7}  layup")
     print("-" * 78)
 
     w_errs, c_ratios = [], []
+    
+    # for each pareto design, compute weight and cost, compare to values in table 5, and compute error and ratio accordingly storing in
+    # array w_errs and c_ratios  
     for r in prob["pareto_designs"]["rows"]:
         layup = [MATERIALS[c] for c in r["layup"]]
         core = CORES[r["rho_c"]]
@@ -39,11 +44,6 @@ def main():
           f"max |err| {max(abs(e) for e in w_errs):.2f}%")
     print(f"Cost:   ratio {min(c_ratios):.2f} to {max(c_ratios):.2f}, "
           f"mean {sum(c_ratios)/len(c_ratios):.3f}")
-    print(f"\nBias vs Al content: lightest designs (0 Al plies) err "
-          f"{w_errs[0]:+.1f}%, heaviest (6 Al) {w_errs[-1]:+.1f}%.")
-    print("Both columns drift the same way, concentrating the residual in "
-          "the face sheet term.  See GR-011.")
-
 
 if __name__ == "__main__":
     main()

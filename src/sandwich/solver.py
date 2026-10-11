@@ -1,8 +1,3 @@
-"""Analytical forward solver: Eqs. 1-8 of Sahib & Kovacs (2024).
-
-Design vector in, structural responses out.  Pure functions, no globals,
-no config reads.  Units are MPa, mm, N throughout.
-"""
 
 from dataclasses import dataclass
 
@@ -11,11 +6,9 @@ from .clt import Material, effective_modulus, transverse_strain_ratio, \
 from .failure import laminate_strength
 
 
+# class defined for material properties of core
 @dataclass(frozen=True)
 class Core:
-    """One row of Table 2.  Axis assignment taken from the column headers;
-    the printed subscripts are identical across all three columns (GR-010).
-    """
     rho: float          # kg/m^3
     tau_x: float        # MPa, shear strength, x
     G_x: float          # MPa, shear modulus, x
@@ -26,99 +19,75 @@ class Core:
     cost_ratio: float = 0.5
 
 
+# class defined for bending, shear deflection and panel geometry
 @dataclass(frozen=True)
 class Panel:
-    """Table 3 geometry and the beam coefficients."""
     l: float = 800.0        # mm, effective length
     b: float = 390.0        # mm, effective width
     k_b: float = 5.0 / 384.0
     k_s: float = 1.0 / 8.0
 
 
-# --- loading ---------------------------------------------------------------
-
+# loading 
+# equivalent load = p * l * b
 def equivalent_load(p: float, panel: Panel) -> float:
-    """P = p * l * b   (Table 3).  N."""
     return p * panel.l * panel.b
 
-
+# max bending moment = P * l / 8
 def max_bending_moment(P: float, panel: Panel) -> float:
-    """M_max = P * l / 8   (Table 3).  N.mm."""
     return P * panel.l / 8.0
 
-
+# max shear force = P / 2
 def max_shear_force(P: float) -> float:
-    """F = P / 2   (Table 3).  N."""
     return P / 2.0
 
 
-# --- geometry --------------------------------------------------------------
-
+# geometry 
+# total laminate thickness based on a layup
 def face_thickness(layup: list[Material]) -> float:
-    """t_f = sum N_li * t_li   (Eq. 14).  mm."""
     return sum(m.t_ply for m in layup)
 
-
+# distance from neutral axis to face sheet
 def centroid_distance(t_f: float, t_c: float) -> float:
-    """d = t_f + t_c   (Eq. 2).  mm.
-
-    Distance between the centres of the upper and lower face sheets.
-    """
     return t_f + t_c
 
 
-# --- stiffness -------------------------------------------------------------
-
+# stiffness 
+# bending stiffness, (4) from base paper
 def bending_stiffness(E_f: float, t_f: float, d: float, panel: Panel) -> float:
-    """D = E_f * t_f * d^2 * b / 2   (Eq. 4).  N.mm^2."""
     return E_f * t_f * d ** 2 * panel.b / 2.0
 
-
+# shear stiffness, (5) from base paper
 def shear_stiffness(d: float, G_xz: float, panel: Panel) -> float:
-    """S = b * d * G_xz   (Eq. 5).  N."""
     return panel.b * d * G_xz
 
 
-# --- responses -------------------------------------------------------------
-
+# responses
+# core shear stress, (1) from base paper
 def core_shear_stress(F: float, d: float, panel: Panel) -> float:
-    """tau_cs = F / (d * b)   (Eq. 1).  MPa."""
     return F / (d * panel.b)
 
-
+# deflection, (3) from base paper
 def deflection(P: float, D: float, S: float, panel: Panel) -> float:
-    """delta = k_b*P*l^3/D + k_s*P*l/S   (Eq. 3).  mm.
-
-    Bending term plus shear term.
-    """
     return panel.k_b * P * panel.l ** 3 / D + panel.k_s * P * panel.l / S
 
 
+# face sheet stress, (6) from base paper
 def face_sheet_stress(M_max: float, d: float, t_f: float) -> float:
-    """sigma_f = M_max / (d * t_f)   (Eq. 6).  MPa."""
     return M_max / (d * t_f)
 
-
+# intracell buckling stress, (7) from base paper
 def intracell_buckling_stress(E_fx: float, nu_xy: float,
                               t_f: float, c: float) -> float:
-    """sigma_in,cr = 2*E_fx/(1 - nu_xy^2) * (2*t_f/c)^2   (Eq. 7).  MPa.
-
-    c is the honeycomb cell size, which the paper never tabulates.
-    See gap register GR-001.
-    """
     return 2.0 * E_fx / (1.0 - nu_xy ** 2) * (2.0 * t_f / c) ** 2
 
-
+# wrinkling stress, (8) from base paper
 def wrinkling_stress(E_fx: float, E_zz: float, G_xz: float) -> float:
-    """sigma_wr,x = 0.5 * (E_fx * E_zz * G_xz)^(1/3)   (Eq. 8).  MPa."""
     return 0.5 * (E_fx * E_zz * G_xz) ** (1.0 / 3.0)
 
-
-# --- driver ----------------------------------------------------------------
-
+# class defined to store all parameters for a given layup, core, core thickness, applied pressure and cell size
 @dataclass(frozen=True)
 class Response:
-    """Everything Eqs. 1-8 produce for one design."""
     t_f: float
     d: float
     E_f: float
@@ -136,9 +105,9 @@ class Response:
     sigma_wr: float
 
 
+# computes all responses for a given layup, core, core thickness, applied pressure and cell size
 def evaluate(layup: list[Material], core: Core, t_c: float, p: float,
              cell_size: float, panel: Panel = Panel()) -> Response:
-    """Run Eqs. 1-8 for one design point."""
     t_f = face_thickness(layup)
     d = centroid_distance(t_f, t_c)
 

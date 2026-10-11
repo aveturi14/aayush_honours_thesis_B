@@ -1,8 +1,8 @@
 REDUCED STIFFNESS Q  [MPa]
                 Q11          Q22          Q12          Q66
 CFRP       130788.8      10060.7       2817.0       5000.0
-GFRP       430500.6       8009.3       2002.3       4300.0
-Al          78554.6      78554.6      25923.0     260000.0
+GFRP        43505.9       8094.1       2023.5       4300.0
+Al          78554.6      78554.6      25923.0      26000.0
 
 TSAI-WU COEFFICIENTS  (Mises-Hencky H12)
                  H1          H11           H2          H22          H12
@@ -32,12 +32,12 @@ TABLE 6 LAYUPS
 
   knee_point  [3, 1, 1, 2, 1, 2]   (FML)
     t_f        0.825 mm   published 0.825  OK
-    A11   172381.8   A12    6741.6   A22   21486.0  N/mm
+    A11    75633.2   A12    6746.9   A22   21507.2  N/mm
     A16        0.0   A26       0.0   (must be zero)
-    eps_y/eps_x  -0.313765
-    E_f          206383.7 MPa
-    R per ply  ['0.002665', '0.015381', '0.015381', '0.002650', '0.015381', '0.002650']
-    sigma_fx       546.90 MPa   governed by GFRP
+    eps_y/eps_x  -0.313702
+    E_f           89111.1 MPa
+    R per ply  ['0.002665', '0.015381', '0.015381', '0.026117', '0.015381', '0.026117']
+    sigma_fx       237.49 MPa   governed by Al
 
 SELF-CHECKS  (theorems, not recorded values)
   all-CFRP  E_f  130000.0 vs E1  130000.0   sigma_fx  2000.00 vs Xt  2000.00   OK

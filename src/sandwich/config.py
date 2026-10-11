@@ -1,13 +1,7 @@
-"""Load config YAML into Material and Core objects.
 
-Units are MPa and mm internally.  GPa values in the YAML are converted
-on load; everything else is taken as written.
-"""
-
+# Load config YAML into material and core objects.
 from pathlib import Path
-
 import yaml
-
 from .clt import Material
 from .solver import Core
 
@@ -15,15 +9,13 @@ CONFIG_DIR = Path(__file__).resolve().parents[2] / "config"
 
 
 def _v(d: dict) -> float:
-    """Unwrap {value:, unit:, source:} and convert GPa to MPa."""
     val = d["value"]
     if d.get("unit") == "GPa":
         return val * 1000.0
     return val
 
-
+# read materials.yaml, and configure material / core properties to relevant variables that can be used in solver
 def load_materials(path: Path | None = None) -> tuple[dict[int, Material], dict[int, Core]]:
-    """Returns ({code: Material}, {density: Core}) from materials.yaml."""
     path = path or CONFIG_DIR / "materials.yaml"
     cfg = yaml.safe_load(open(path))
 
@@ -51,14 +43,12 @@ def load_materials(path: Path | None = None) -> tuple[dict[int, Material], dict[
         )
     return mats, cores
 
-
+# read problem.yaml and return readable object for the problem
 def load_problem(path: Path | None = None) -> dict:
-    """Raw problem.yaml.  Geometry, codes, reference designs, Table 5."""
     path = path or CONFIG_DIR / "problem.yaml"
     return yaml.safe_load(open(path))
 
-
+# read design_space.yaml and return readable object for design space
 def load_design_space(path: Path | None = None) -> dict:
-    """Raw design_space.yaml.  Bounds and constraint thresholds."""
     path = path or CONFIG_DIR / "design_space.yaml"
     return yaml.safe_load(open(path))

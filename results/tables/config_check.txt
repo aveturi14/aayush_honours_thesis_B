@@ -3,10 +3,10 @@
 TABLE 1 - face sheet material properties
 ========================================================================
 property           CFRP         GFRP           Al  unit
-E1                  130          430           70  GPa
+E1                  130           43           70  GPa
 E2                   10            8           70  GPa
 nu12               0.28         0.25         0.33  
-G12                   5          4.3          260  GPa
+G12                   5          4.3           26  GPa
 rho                1600         1800         2780  kg/m**3
 t_ply             0.125        0.125          0.2  mm
 Xt                 2000         1140          186  MPa
@@ -113,5 +113,5 @@ CROSS-CHECKS
 ========================================================================
   core densities in design_space present in materials: OK
   material codes: 1=CFRP, 2=GFRP, 3=Al
-  Al G12: published 260000, isotropic 26316, diff +888.0%  (GR-006)
-  E1 hierarchy CFRP > Al > GFRP: 130000 > 70000 > 430000  FAIL  (GR-005)
+  Al G12: published 26000, isotropic 26316, diff -1.2%  (GR-006)
+  E1 hierarchy CFRP > Al > GFRP: 130000 > 70000 > 43000  OK  (GR-005)

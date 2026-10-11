@@ -1,8 +1,10 @@
+
+# variables which can be taken from somewhere in this range, flexible 
 continuous:
   core_thickness:
     # Table 4 gives 5 to 20 mm for the optimisation design variable.
     # Sec. 3.2 gives 5 to 50 mm for the Monte Carlo dataset generation.
-    # The paper does not reconcile these.  See gap register.
+    # need to verify and adjust this
     sampling:
       min: {value: 5,  unit: mm, source: "Sec 3.2"}
       max: {value: 50, unit: mm, source: "Sec 3.2"}
@@ -11,14 +13,11 @@ continuous:
       max: {value: 20, unit: mm, source: "Table 4"}
 
   applied_load:
-    # Table 4: "the load was not considered as a design variable; rather,
-    # it was treated as a flexible input parameter determined by the
-    # designer".  It IS one of the nine ANN inputs (Fig. 5), so it is
-    # sampled for the dataset but held fixed during MOGA.
     min: {value: 0.0024, unit: MPa, source: "Sec 3.2"}
     max: {value: 0.0048, unit: MPa, source: "Sec 3.2"}
     optimisation_value: {value: 0.004142, unit: MPa, source: "Table 3"}
 
+# variable parameters which are not flexible, must be selected from discrete set of values
 discrete:
   core_density:
     values: [29, 37, 42, 54, 59, 83]   # must match the keys in materials.yaml
@@ -31,6 +30,7 @@ discrete:
     note: "Codes defined in problem.yaml material_codes. Each of the six
            layers is selected independently."
            
+# physical constraints on design space based on defined equations in base paper
 constraints:
   max_total_thickness:  {value: 20.0, unit: mm, source: "Eq 27"}
   deflection_divisor:   {value: 400,  unit: "", source: "Eq 26, delta <= l/400"}

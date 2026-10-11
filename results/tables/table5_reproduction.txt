@@ -1,3 +1,5 @@
+
+TABLE 5 PARETO DESIGNS
   #  Wt pub  Wt calc   err %    Ct pub   Ct calc   ratio  layup
 ------------------------------------------------------------------------------
   1    1.88    1.931    +2.7      2.41     2.530    1.05  111111
@@ -21,6 +23,3 @@
 ------------------------------------------------------------------------------
 Weight: mean err +1.35%, max |err| 2.84%
 Cost:   ratio 0.99 to 1.05, mean 1.022
-
-Bias vs Al content: lightest designs (0 Al plies) err +2.7%, heaviest (6 Al) +0.6%.
-Both columns drift the same way, concentrating the residual in the face sheet term.  See GR-011.

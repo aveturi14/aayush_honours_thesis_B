@@ -1,9 +1,5 @@
-"""Q, A, E_f and sigma_fx for the three Table 6 layups, plus the t_f check.
 
-Week 2 deliverable.  The two homogeneous layups are provable self-checks:
-a single-material stack must return that material's own E1 and Xt.
-"""
-
+# imports functions from clt.py, config.py and failure.py  
 from sandwich.clt import (extensional_stiffness, effective_modulus,
                           reduced_stiffness, transverse_strain_ratio)
 from sandwich.config import load_materials, load_problem
@@ -11,9 +7,13 @@ from sandwich.failure import coefficients, laminate_strength
 
 
 def main():
+    # take material properties from materials.yaml
     MATERIALS, _ = load_materials()
+    
+    # take problem configuration from problem.yaml (table 5 and 6)
     prob = load_problem()
 
+    # Compute Q matrix using classical laminate theory functions
     print("REDUCED STIFFNESS Q  [MPa]")
     print(f"{'':6} {'Q11':>12} {'Q22':>12} {'Q12':>12} {'Q66':>12}")
     for code in (1, 2, 3):
@@ -22,6 +22,7 @@ def main():
         print(f"{m.name:<6} {Q[0,0]:>12.1f} {Q[1,1]:>12.1f} "
               f"{Q[0,1]:>12.1f} {Q[2,2]:>12.1f}")
 
+    # Compute Tsai-Wu coefficients
     print("\nTSAI-WU COEFFICIENTS  (Mises-Hencky H12)")
     print(f"{'':6} {'H1':>12} {'H11':>12} {'H2':>12} {'H22':>12} {'H12':>12}")
     for code in (1, 2, 3):
@@ -30,6 +31,7 @@ def main():
         print(f"{m.name:<6} {c.H1:>12.4e} {c.H11:>12.4e} "
               f"{c.H2:>12.4e} {c.H22:>12.4e} {c.H12:>12.4e}")
 
+    # For each reference design, compute laminate properties and compare to published values
     print("\nTABLE 6 LAYUPS")
     for name, d in prob["reference_designs"].items():
         layup = [MATERIALS[c] for c in d["layup"]]
@@ -48,6 +50,8 @@ def main():
         print(f"    R per ply  {[f'{r:.6f}' for r in ratios]}")
         print(f"    sigma_fx   {sigma_fx:>10.2f} MPa   governed by {layup[k].name}")
 
+    # Again eye checks for theorems, specifically single material laminates (CFRP and Al) to ensure that 
+    # effective modulus and laminate strength values are consistent. 
     print("\nSELF-CHECKS  (theorems, not recorded values)")
     for code, label in [(1, "CFRP"), (3, "Al")]:
         m = MATERIALS[code]
