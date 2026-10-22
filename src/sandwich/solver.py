@@ -17,6 +17,7 @@ class Core:
     sigma_z: float      # MPa, compressive strength, z
     E_z: float          # MPa, compressive modulus, z
     cost_ratio: float = 0.5
+    cell_size: float | None = None # mm, honeycomb cell size
 
 
 # class defined for bending, shear deflection and panel geometry
@@ -73,8 +74,8 @@ def deflection(P: float, D: float, S: float, panel: Panel) -> float:
 
 
 # face sheet stress, (6) from base paper
-def face_sheet_stress(M_max: float, d: float, t_f: float) -> float:
-    return M_max / (d * t_f)
+def face_sheet_stress(M_max: float, b: float, d: float, t_f: float) -> float:
+    return M_max / (d * b * t_f)    # dimensionally inconsistent, determined to require panel width, b, to compute stress
 
 # intracell buckling stress, (7) from base paper
 def intracell_buckling_stress(E_fx: float, nu_xy: float,
@@ -107,7 +108,10 @@ class Response:
 
 # computes all responses for a given layup, core, core thickness, applied pressure and cell size
 def evaluate(layup: list[Material], core: Core, t_c: float, p: float,
-             cell_size: float, panel: Panel = Panel()) -> Response:
+             cell_size: float | None = None, panel: Panel = Panel()) -> Response:
+    
+    c = core.cell_size if cell_size is None else cell_size 
+    
     t_f = face_thickness(layup)
     d = centroid_distance(t_f, t_c)
 
@@ -129,7 +133,7 @@ def evaluate(layup: list[Material], core: Core, t_c: float, p: float,
         P=P, M_max=M_max, F=F, D=D, S=S,
         tau_cs=core_shear_stress(F, d, panel),
         delta=deflection(P, D, S, panel),
-        sigma_f=face_sheet_stress(M_max, d, t_f),
-        sigma_in_cr=intracell_buckling_stress(E_f, nu_xy, t_f, cell_size),
+        sigma_f=face_sheet_stress(M_max, panel.b, d, t_f),
+        sigma_in_cr=intracell_buckling_stress(E_f, nu_xy, t_f, c),
         sigma_wr=wrinkling_stress(E_f, core.E_z, core.G_x),
     )

@@ -60,6 +60,7 @@ cores:
   # Keyed by density so sampling.py can select directly
   rho_29:
     density:     {value: 29, unit: kg/m**3, source: "Table 2"}
+    cell_size:   {value: 19.05, unit: mm, source: "Hexcel AGU 075b App. I, 3003 Al, 3/4 in"}
     x:
       strength: {value: 0.4, unit: MPa, source: "Table 2"}
       modulus:  {value: 55,  unit: MPa, source: "Table 2"}
@@ -73,6 +74,7 @@ cores:
 
   rho_37:
     density:     {value: 37, unit: kg/m**3, source: "Table 2"}
+    cell_size:   {value: 9.525, unit: mm, source: "Hexcel AGU 075b App. I, 3003 Al, 3/8 in"}
     x:
       strength: {value: 0.45, unit: MPa, source: "Table 2"}
       modulus:  {value: 90,  unit: MPa, source: "Table 2"}
@@ -86,6 +88,7 @@ cores:
 
   rho_42:
     density:     {value: 42, unit: kg/m**3, source: "Table 2"}
+    cell_size:   {value: 12.7, unit: mm, source: "Hexcel AGU 075b App. I, 3003 Al, 1/2 in"}
     x:
       strength: {value: 0.5, unit: MPa, source: "Table 2"}
       modulus:  {value: 100,  unit: MPa, source: "Table 2"}
@@ -99,6 +102,7 @@ cores:
 
   rho_54:
     density:     {value: 54, unit: kg/m**3, source: "Table 2"}
+    cell_size:   {value: 6.35, unit: mm, source: "Hexcel AGU 075b App. I, 3003 Al, 1/4 in"}
     x:
       strength: {value: 0.85, unit: MPa, source: "Table 2"}
       modulus:  {value: 130,  unit: MPa, source: "Table 2"}
@@ -112,6 +116,7 @@ cores:
 
   rho_59:
     density:     {value: 59, unit: kg/m**3, source: "Table 2"}
+    cell_size:   {value: 9.525, unit: mm, source: "Hexcel AGU 075b App. I, 3003 Al, 3/8 in"}
     x:
       strength: {value: 0.9, unit: MPa, source: "Table 2"}
       modulus:  {value: 140,  unit: MPa, source: "Table 2"}
@@ -125,6 +130,7 @@ cores:
 
   rho_83:
     density:     {value: 83, unit: kg/m**3, source: "Table 2"}
+    cell_size:   {value: 6.35, unit: mm, source: "Hexcel AGU 075b App. I, 3003 Al, 1/4 in"}
     x:
       strength: {value: 1.5, unit: MPa, source: "Table 2"}
       modulus:  {value: 220,  unit: MPa, source: "Table 2"}
@@ -138,12 +144,6 @@ cores:
   
 # Parameters unreported in the base paper but needed for the design space definition
 unreported:
-  cell_size_c:
-    value: null
-    unit: mm
-    source: "NOT IN PAPER"
-    gap_id: GR-001
-    note: "Appears in Eq. 7 (intra-cell buckling). Candidate values from HexWeb standard product line."
   tsai_wu_F12:
     value: null
     unit: "1/MPa**2"
