@@ -1,9 +1,7 @@
 
 import json
 from pathlib import Path
-
 import matplotlib.pyplot as plt
-
 from sandwich.config import load_problem
 from sandwich.preprocess import prepare
 from sandwich.sampling import (OUTPUT_COLS, coverage_report, evaluate_designs,
