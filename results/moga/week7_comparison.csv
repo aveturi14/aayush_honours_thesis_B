@@ -1,0 +1,15 @@
+,exact feasibility (default),ANN-only feasibility (paper)
+feasibility judged by,exact,ann
+front size (paper 18),36,19
+physically distinct designs (paper 16),15,15
+"spread, Deb delta",1.198,0.493
+"violation rate, all evaluated",49.8%,50.1%
+evaluations / generations,23000 / 231,23000 / 231
+knee W_t kg (paper 2.39),2.435,2.435
+knee C_t (paper 2.1),2.156,2.155
+"knee design (density, t_c, layup)","29, 18.08, 1,2,1,3,1,2","29, 18.05, 1,2,1,3,1,2"
+front feasible by exact solver,36 of 36,2 of 19
+"C_delta on front, ANN",0.9835 to 1.0016,0.9994 to 1.0000
+"C_delta on front, exact (limit 1.0)",0.9993 to 1.0000,0.9979 to 1.0167
+"max ANN error on front, W_t / C_t",0.44% / 0.10%,0.44% / 0.10%
+run time (s),10.23,1.67

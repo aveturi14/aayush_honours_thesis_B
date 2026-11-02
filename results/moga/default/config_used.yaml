@@ -1,0 +1,31 @@
+surrogate:
+  model_dir: models/ann_baseline
+  scalers: data/processed/scalers.json
+algorithm:
+  name: NSGA2
+  n_evaluations: 23000
+  pop_size: 100
+  selection: binary_tournament
+  crossover:
+    type: SBX
+    prob: 0.9
+    eta: 15
+  mutation:
+    type: PM
+    prob: 0.9
+    prob_var: null
+    eta: 20
+  eliminate_duplicates: true
+  duplicate_tolerance: 1.0e-06
+  seed: 1
+metrics:
+  hv_reference:
+  - 5.0
+  - 2.6
+targets:
+  pareto_size: 18
+  knee_row: 6
+feasibility:
+  constraints_from: exact
+  report_only_feasible: true
+output_dir: results/moga/default

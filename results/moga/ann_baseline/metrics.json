@@ -1,0 +1,31 @@
+{
+  "seed": 1,
+  "constraints_from": "ann",
+  "front_before_feasibility_filter": 19,
+  "n_evaluations": 23000,
+  "n_generations": 231,
+  "run_seconds": 1.67,
+  "cardinality": 19,
+  "distinct_designs": 15,
+  "spread_delta": 0.4927178528823948,
+  "violation_rate": 0.5008695652173913,
+  "hypervolume": 2.129834623158858,
+  "W_t_range": [
+    1.8548960419915002,
+    4.655858327633251
+  ],
+  "C_t_range": [
+    1.5020728150523688,
+    2.4943908553905487
+  ],
+  "knee_W_t": 2.4346074159141575,
+  "knee_C_t": 2.1552953653962823,
+  "knee_design": {
+    "rho_c": 29,
+    "t_c": 18.053541624049927,
+    "layup": "1,2,1,3,1,2"
+  },
+  "front_feasible_exact": 2,
+  "max_rel_err_W_t": 0.00437544421569791,
+  "max_rel_err_C_t": 0.0009680879330714598
+}
