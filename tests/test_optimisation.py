@@ -135,3 +135,14 @@ def test_report_filter_removes_exact_failures(surrogate):
 def test_unknown_feasibility_mode_rejected(surrogate):
     with pytest.raises(ValueError):
         SandwichProblem(surrogate, constraints_from="fem")
+        
+def test_parallel_sweep_matches_sequential(surrogate):
+    # spreading runs over CPU cores must not change any result
+    from sandwich.optimisation.run import run_sweep
+    cfg = load_moga_config(overrides={"algorithm": {"n_evaluations": 1000, "pop_size": 50},
+                                      "feasibility": {"constraints_from": "ann",
+                                                      "report_only_feasible": False}})
+    a = run_sweep({"x": {}}, [1, 2], base_cfg=cfg, surrogate=surrogate, verbose=False, n_jobs=1)
+    b = run_sweep({"x": {}}, [1, 2], base_cfg=cfg, surrogate=surrogate, verbose=False, n_jobs=2)
+    assert a.cardinality.tolist() == b.cardinality.tolist()
+    assert np.allclose(a.knee_W_t, b.knee_W_t)

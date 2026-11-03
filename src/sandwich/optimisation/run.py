@@ -177,20 +177,33 @@ def save_result(result: MogaResult, out_dir: str | Path | None = None) -> Path:
     return out
 
 
+# one run of a sweep, returned as a metrics row (top-level so parallel workers can call it)
+def _sweep_one(label: str, cfg: dict, surrogate: Surrogate, seed: int) -> dict:
+    r = run_moga(cfg, surrogate=surrogate, seed=seed)
+    return {"variant": label, **r.metrics}
+
+
 # runs several settings x several seeds, reusing one surrogate
 # variants: {"label": overrides dict}; returns one metrics row per run
+# n_jobs > 1 spreads the runs over that many CPU cores (-1 = all cores)
 def run_sweep(variants: dict[str, dict], seeds: list[int],
               base_cfg: dict | None = None, surrogate: Surrogate | None = None,
-              verbose: bool = True) -> pd.DataFrame:
+              verbose: bool = True, n_jobs: int = 1) -> pd.DataFrame:
     base_cfg = base_cfg or load_moga_config()
     surrogate = surrogate or load_surrogate(base_cfg)        # loaded once for every run
-    rows = []
-    for label, overrides in variants.items():
-        cfg = merge_config(base_cfg, overrides)
-        for seed in seeds:
-            r = run_moga(cfg, surrogate=surrogate, seed=seed)
-            rows.append({"variant": label, **r.metrics})
+    tasks = [(label, merge_config(base_cfg, ov), seed)
+             for label, ov in variants.items() for seed in seeds]
+
+    if n_jobs == 1:
+        rows = []
+        for label, cfg, seed in tasks:
+            rows.append(_sweep_one(label, cfg, surrogate, seed))
             if verbose:
-                print(f"{label:<24} seed {seed}: {r.metrics['cardinality']:>3} points, "
-                      f"knee W {r.metrics['knee_W_t']:.2f} C {r.metrics['knee_C_t']:.2f}")
+                m = rows[-1]
+                print(f"{label:<24} seed {seed}: {m['cardinality']:>3} points, "
+                      f"knee W {m['knee_W_t']:.2f} C {m['knee_C_t']:.2f}")
+    else:
+        from joblib import Parallel, delayed                 # ships with Anaconda
+        rows = Parallel(n_jobs=n_jobs, verbose=5 if verbose else 0)(
+            delayed(_sweep_one)(label, cfg, surrogate, seed) for label, cfg, seed in tasks)
     return pd.DataFrame(rows)
