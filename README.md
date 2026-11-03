@@ -7,11 +7,6 @@ Networks and Genetic Algorithm. *Results in Engineering*, 21, 101937.
 
 UNSW Thesis B. Supervisor: Dr Shiva Abdoli.
 
-## Status
-
-**Week 1** — repository scaffold and environment complete. Config
-transcription and gap register in progress.
-
 ## Setup
 
 ```bash
