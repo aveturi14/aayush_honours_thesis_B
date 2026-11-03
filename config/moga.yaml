@@ -1,0 +1,65 @@
+
+# config/moga.yaml
+# Week 7-8: ANN-MOGA settings
+#
+# Only settings that exist nowhere else live here. Read from the other files instead:
+#   design variable ranges (t_c 5-20 mm, densities) .. design_space.yaml  (optimisation entries)
+#   load held fixed during the GA .................... design_space.yaml  (applied_load.optimisation_value)
+#   constraint limits, Eqs. 22-27 .................... design_space.yaml  (constraints)
+#   material codes ................................... problem.yaml       (material_codes)
+#   Table 5 Pareto designs ........................... problem.yaml       (pareto_designs)
+# Objectives are fixed in code as W_t and C_t, both minimised (Eqs. 20-21).
+#
+# Tags:
+#   [paper]    stated in the base paper
+#   [inferred] not stated, but supported by indirect evidence in the paper
+#   [choice]   not reported, replication decision (each needs a gap register entry)
+
+# Inputs from earlier stages (paths relative to the repository root)
+surrogate:
+  model_dir: models/ann_baseline                  # weights.npz saved by 05b
+  scalers: data/processed/scalers.json            # Eq. 16 min/max from the Week 4 training set
+
+# Algorithm (only the budget is reported)
+algorithm:
+  name: NSGA2                                     # [inferred] paper says only "MOGA"; run in MATLAB (Fig. 7),
+                                                  #            whose built-in multi-objective GA is an NSGA-II variant;
+                                                  #            cited source [50] used NSGA-II + IMDSM in MATLAB
+  n_evaluations: 23000                            # [paper] "23,000 iterations" (Sec. 5.2), read as ANN evaluations
+  pop_size: 100                                   # [choice] first-run default; swept in Week 8
+  selection: binary_tournament                    # [choice] NSGA-II standard; alternative: random
+  crossover:
+    type: SBX                                     # [choice] simulated binary crossover
+    prob: 0.9                                     # [choice] chance a parent pair is crossed (NSGA-II standard)
+    eta: 15                                       # [choice] spread of children around parents
+  mutation:
+    type: PM                                      # [choice] polynomial mutation
+    prob: 0.9                                     # [choice] chance a child is mutated at all (pymoo default)
+    prob_var: null                                # [choice] null = 1/n_var chance per gene (1/8)
+    eta: 20                                       # [choice]
+  eliminate_duplicates: true                      # [choice] discrete genes produce repeated designs
+  duplicate_tolerance: 1.0e-6                     # [choice] designs whose genes differ by less than this
+                                                  #          (in practice t_c, in mm) count as the same design
+  seed: 1                                         # [choice] fixed for reproducibility
+
+# Front quality measures
+metrics:
+  hv_reference: [5.0, 2.6]                        # [choice] [W_t kg, C_t unit price], just beyond the Table 5
+                                                  #          maxima (4.65 kg, 2.41); fixed so runs compare fairly
+
+# Replication targets (benchmarked in Week 8)
+targets:
+  pareto_size: 18                                 # [paper] Sec. 4 and 5.2
+  knee_row: 6                                     # [paper] Table 5 row 6 (Wt 2.39 kg, Ct 2.1), matches Sec. 5.2;
+                                                  #         Table 6 swaps these two values
+
+# Where feasibility (Eqs. 22-27) is judged
+feasibility:
+  constraints_from: exact                         # [choice] "exact": constraints from the closed-form solver, so only
+                                                  #          truly feasible designs rank as feasible, breed and survive;
+                                                  #          "ann": constraints predicted by the ANN (the paper's method,
+                                                  #          kept for the replication baseline)
+  report_only_feasible: true                      # [choice] the reported front contains only designs that pass the
+                                                  #          exact solver; in "ann" mode failing designs are removed
+# Output
+output_dir: results/moga/default                  # created on first run

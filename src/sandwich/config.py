@@ -40,6 +40,7 @@ def load_materials(path: Path | None = None) -> tuple[dict[int, Material], dict[
             tau_y=_v(c["y"]["strength"]), G_y=_v(c["y"]["modulus"]),
             sigma_z=_v(c["z"]["strength"]), E_z=_v(c["z"]["modulus"]),
             cost_ratio=_v(c["cost_ratio"]),
+            cell_size=_v(c["cell_size"]),
         )
     return mats, cores
 

@@ -1,0 +1,31 @@
+{
+  "architecture": "9-28-27-8, tansig hidden, purelin output",
+  "initialisation": "Nguyen-Widrow (hidden), uniform [-1, 1] (output)",
+  "seed": 42,
+  "trainlm_settings": {
+    "epochs": 1000,
+    "goal": 0.0,
+    "max_fail": 6,
+    "min_grad": 1e-07,
+    "mu": 0.001,
+    "mu_dec": 0.1,
+    "mu_inc": 10.0,
+    "mu_max": 10000000000.0
+  },
+  "stop_reason": "maximum epochs reached",
+  "epochs_run": 1000,
+  "best_epoch": 1000,
+  "train_minutes": 37.0,
+  "mse": {
+    "training": 5.587643063134147e-08,
+    "validation": 6.455561841612472e-08,
+    "test": 7.168090351712037e-08
+  },
+  "r2_pooled": {
+    "training": 0.9999981604752591,
+    "validation": 0.999997878155344,
+    "test": 0.9999977044098661
+  },
+  "data_file": "data/processed/prepared.npz",
+  "data_md5": "2eb932c348db2a57b93070d6050d2413"
+}

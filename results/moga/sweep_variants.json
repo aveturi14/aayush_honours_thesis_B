@@ -1,0 +1,80 @@
+{
+  "variants": {
+    "centre": {},
+    "pop_50": {
+      "algorithm": {
+        "pop_size": 50
+      }
+    },
+    "pop_200": {
+      "algorithm": {
+        "pop_size": 200
+      }
+    },
+    "cx_0.6": {
+      "algorithm": {
+        "crossover": {
+          "prob": 0.6
+        }
+      }
+    },
+    "cx_0.8": {
+      "algorithm": {
+        "crossover": {
+          "prob": 0.8
+        }
+      }
+    },
+    "mut_1/16": {
+      "algorithm": {
+        "mutation": {
+          "prob_var": 0.0625
+        }
+      }
+    },
+    "mut_1/4": {
+      "algorithm": {
+        "mutation": {
+          "prob_var": 0.25
+        }
+      }
+    },
+    "eta_5": {
+      "algorithm": {
+        "crossover": {
+          "eta": 5
+        }
+      }
+    },
+    "eta_30": {
+      "algorithm": {
+        "crossover": {
+          "eta": 30
+        }
+      }
+    },
+    "select_random": {
+      "algorithm": {
+        "selection": "random"
+      }
+    },
+    "budget_11500": {
+      "algorithm": {
+        "n_evaluations": 11500
+      }
+    },
+    "budget_46000": {
+      "algorithm": {
+        "n_evaluations": 46000
+      }
+    }
+  },
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "feasibility": "ann"
+}

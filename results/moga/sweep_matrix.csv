@@ -1,0 +1,13 @@
+variant,pop_size,n_evaluations,generations_approx,crossover_prob,sbx_eta,mutation_prob_var,selection,feasibility
+centre,100,23000,230,0.9,15,0.125,binary_tournament,ann
+pop_50,50,23000,460,0.9,15,0.125,binary_tournament,ann
+pop_200,200,23000,115,0.9,15,0.125,binary_tournament,ann
+cx_0.6,100,23000,230,0.6,15,0.125,binary_tournament,ann
+cx_0.8,100,23000,230,0.8,15,0.125,binary_tournament,ann
+mut_1/16,100,23000,230,0.9,15,0.0625,binary_tournament,ann
+mut_1/4,100,23000,230,0.9,15,0.25,binary_tournament,ann
+eta_5,100,23000,230,0.9,5,0.125,binary_tournament,ann
+eta_30,100,23000,230,0.9,30,0.125,binary_tournament,ann
+select_random,100,23000,230,0.9,15,0.125,random,ann
+budget_11500,100,11500,115,0.9,15,0.125,binary_tournament,ann
+budget_46000,100,46000,460,0.9,15,0.125,binary_tournament,ann
