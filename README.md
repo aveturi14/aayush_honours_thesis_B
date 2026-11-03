@@ -27,16 +27,16 @@ pytest -m "not slow"
 
 | Week | Deliverable | Status |
 |---|---|---|
-| 1 | Config (Tables 1–4), gap register v1, FEM decision | in progress |
-| 2 | CLT and Tsai-Wu modules, hand calcs | |
-| 3 | Analytical solver, Table 5 reproduced | |
-| 4 | 9,000-point dataset, normalisation pipeline | |
-| 5 | Baseline ANN, FEM runs | |
-| 6 | Tuned ANN, parity plots, frozen baseline | |
-| 7 | ANN-MOGA, first Pareto front | |
-| 8 | Sweep, knee point, Table 5 benchmark | |
-| 9 | FEM comparison, c sensitivity, gap register closed | |
-| 10 | Refactor, Thesis C interface spec | |
+| 1 | Config (Tables 1–4), gap register v1, FEM decision | complete |
+| 2 | CLT and Tsai-Wu modules, hand calcs | complete |
+| 3 | Analytical solver, Table 5 reproduced | complete |
+| 4 | 9,000-point dataset, normalisation pipeline | complete |
+| 5 | Baseline ANN, FEM runs | complete |
+| 6 | Tuned ANN, parity plots, frozen baseline | complete |
+| 7 | ANN-MOGA, first Pareto front | complete |
+| 8 | Sweep, knee point, Table 5 benchmark | complete |
+| 9 | FEM comparison, c sensitivity, gap register closed | complete |
+| 10 | Refactor, Thesis C interface spec | inprogress |
 
 ## Layout
 
